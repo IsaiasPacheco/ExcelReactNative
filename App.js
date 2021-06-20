@@ -7,12 +7,13 @@
  */
 
 import React from 'react';
-
+import 'react-native-gesture-handler';
 //react fs
 import RNFS, { writeFile, readFile, DocumentDirectoryPath, DownloadDirectoryPath } from 'react-native-fs';
 import { SafeAreaProvider} from 'react-native-safe-area-context'
 import { Header } from 'react-native-elements'
 import { PermissionsAndroid , Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 //Componentes
 import Facturas from './src/Facturas/Facturas.js'
@@ -91,6 +92,7 @@ const readFileFn = async () => {
 function App () {
 
   return (
+    <NavigationContainer>
     <SafeAreaProvider>
       <Header
         backgroundColor="#5f9ea0"
@@ -98,9 +100,9 @@ function App () {
         leftComponent={{ icon: 'menu', color: '#fff' }}
         centerComponent={{ text: 'Facturas', style: { color: '#fff' } }}
       />
-      <Button onPress={() => readFileFn()} title="Guardar"/>
-      <Facturas/> 
+      <HomeScreen/> 
     </SafeAreaProvider>
+    </NavigationContainer>
   )
 }
 export default App;

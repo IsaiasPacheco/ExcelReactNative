@@ -34,12 +34,12 @@ const Facturas = (props) => {
         showMode('date');
       };
 
-    console.log(props.route.params)
+    console.log(props.params)
 
     return(
         <ScrollView>
         <View >
-            <Text style={styles.folio}> Folio: {folio} </Text>
+            <Text style={styles.folio}> Folio: {props.folio} </Text>
             <Input placeholder='Fecha' label="Fecha" editable={false} style={styles.fecha} value={fecha.toLocaleDateString()}/>
             <TouchableOpacity onPress={showDatepicker} style={styles.btn}>
                 <Text style={{color: 'white', fontWeight: 'bold', fontSize: 17}}>Seleccionar fecha</Text>
@@ -60,10 +60,17 @@ const Facturas = (props) => {
             <Input placeholder='Importe'  label="Importe" value={importe} onChange={text => setImporte(text)}/>
             <Input multiline label="Observaciones" placeholder='Observaciones' value={observaciones} onChange={text => setObservaciones(text)} />
 
-            <Button title="Guardar factura"/>
+            <View style={{justifyContent: 'center', marginBottom: 20, flexDirection: 'row', alignItems: 'flex-end' }}>
+                <TouchableOpacity  style={styles.btn}>
+                    <Text style={{color: 'white', fontWeight: 'bold', fontSize: 17, textAlign: 'center'}} >Guardar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={props.cerrarVentana} style={styles.btn}>
+                    <Text style={{color: 'white', fontWeight: 'bold', fontSize: 17, textAlign: 'center'}} >Cancelar</Text>
+                </TouchableOpacity>
+            </View>
             {show && (
                 <DateTimePicker
-                    testID="dateTimePicker"
+                    testID="dateTimePicker" 
                     value={fecha}
                     mode={mode}
                     is24Hour={true}

@@ -19,6 +19,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 //Componentes
 import Facturas from './src/Facturas/Facturas.js'
 import HomeScreen from './src/HomeScreen/HomeScreen'
+import ListaFacturas from './src/ListaFacturas/ListaFacturas.js'
 
 //Android
 const nombreArchivo = "/FacturasNoBorrar.txt";
@@ -122,7 +123,7 @@ function App () {
         <Stack.Screen name="Home" > 
             {props => <HomeScreen {...props} arreglo={arregloDB}/>}
         </Stack.Screen>
-        <Stack.Screen name="Facturas" component={Facturas} />
+        <Stack.Screen name="ListarFacturas" component={ListaFacturas} />
       </Stack.Navigator>
       
     </SafeAreaProvider>

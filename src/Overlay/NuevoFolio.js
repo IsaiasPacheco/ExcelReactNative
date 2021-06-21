@@ -3,7 +3,10 @@ import {View, Text, StyleSheet, TouchableOpacity, ToastAndroid} from 'react-nati
 import {Input, Button} from 'react-native-elements'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
-
+import RNFS, {DownloadDirectoryPath} from 'react-native-fs'
+const nombreArchivo = "/FacturasNoBorrar.txt";
+const DDP = DownloadDirectoryPath+nombreArchivo
+const unicode = 'utf8'
 
 const NuevoFolio = (props) => {
     //Estados para el datepicker
@@ -20,6 +23,10 @@ const NuevoFolio = (props) => {
         setShow(Platform.OS === 'ios');
         setFecha(currentDate);
     };
+
+    const p = () => {
+        console.log(props.arreglo)
+    }
 
     const showToast = () => {
         ToastAndroid.showWithGravityAndOffset(
@@ -43,8 +50,51 @@ const NuevoFolio = (props) => {
     const guardarFolio = () => {
         if( importeIngreso.length == 0 && numeroFolio.length == 0){
             showToast()
+        }else {
+            const arr = {icon:'description',numFolio: numeroFolio, fecha: fecha.toLocaleDateString(), importe: importeIngreso, con_req_fis:'0', sin_req_fis:'0', facturasList:[], total: '0', diferecia: '0'}
+        
+            if (Object.values(props.arreglo).length === 0){
+                //console.log( (props.arreglo))
+                props.arreglo.push(arr)
+                RNFS.unlink(DDP).then( () => {
+                    RNFS.writeFile(DDP, JSON.stringify(props.arreglo), unicode)
+                    .then(() => {
+                        console.log("Guardado exitoso")
+                    }).catch( (error) => {
+                        console.log("Error al guardar")
+                        console.log(error)
+                    })
+                }).catch( (error) => {
+                    console.log(error)
+                    console.log("Error al eliminar")
+                })
+                //console.log(props.arreglo)
+            }else{
+                for( var i=0; i<Object.values(props.arreglo).length; i++){
+                    if( props.arreglo[i].numFolio === numeroFolio ){
+                        //console.log("No se puede agregar ya que existe el folio")
+                    }else{
+                        //Si no existe escribir en arreglo
+                        props.arreglo.push(arr)
+                        RNFS.unlink(DDP).then( () => {
+                            RNFS.writeFile(DDP, JSON.stringify(props.arreglo), unicode)
+                            .then(() => {
+                                console.log("Guardado exitoso")
+                            }).catch( (error) => {
+                                console.log("Error al guardar")
+                                console.log(error)
+                            })
+                        }).catch( (error) => {
+                            console.log(error)
+                            console.log("Error al eliminar")
+                        })
+                        break;
+                        //console.log(props.arreglo)
+                    }
+                }
+            } 
         }
-        console.log({folio: numeroFolio, fecha: fecha.toLocaleDateString(), ingreso: importeIngreso})
+        //console.log({folio: numeroFolio, fecha: fecha.toLocaleDateString(), ingreso: importeIngreso})
     }
 
 

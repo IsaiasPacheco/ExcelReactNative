@@ -4,7 +4,7 @@ import {Text, View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Input,CheckBox,Button  } from 'react-native-elements'
 
-const Facturas = () => {
+const Facturas = (props) => {
     
     //Estados para la informacion
     const [fecha, setFecha] = useState(new Date())
@@ -33,6 +33,8 @@ const Facturas = () => {
       const showDatepicker = () => {
         showMode('date');
       };
+
+    console.log(props.route.params)
 
     return(
         <ScrollView>

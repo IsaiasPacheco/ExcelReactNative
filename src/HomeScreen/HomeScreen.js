@@ -91,9 +91,9 @@ const HomePage = (props) => {
     props.arreglo.map((item, i) => (
       <ListItem key={i} bottomDivider style={{flex: 1, marginTop: 10, marginLeft: 10, marginEnd: 10, elevation: 5}}>
         <Icon name={item.icon} />
-        <TouchableOpacity onPress={() => printIndex(i)} >
+        <TouchableOpacity onPress={() => props.navigation.navigate('Facturas', {index: i, folio: item.numFolio, arreglo: props.arreglo})} >
         <ListItem.Content >
-          <ListItem.Title>{item.folio}</ListItem.Title>
+          <ListItem.Title>Folio: {item.numFolio}</ListItem.Title>
           <ListItem.Subtitle>Fecha: {item.fecha}</ListItem.Subtitle>
           <ListItem.Subtitle>Importe: {item.importe}</ListItem.Subtitle>
           <ListItem.Subtitle>Con req. fis: {item.con_req_fis}</ListItem.Subtitle>

@@ -14,6 +14,7 @@ import { SafeAreaProvider} from 'react-native-safe-area-context'
 import { Header } from 'react-native-elements'
 import { PermissionsAndroid , Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 //Componentes
 import Facturas from './src/Facturas/Facturas.js'
@@ -107,8 +108,9 @@ function App () {
     
   }, [])
 
-
+  const Stack = createStackNavigator();
   return (
+    <NavigationContainer>
     <SafeAreaProvider>
       <Header
         backgroundColor="#5f9ea0"
@@ -116,8 +118,15 @@ function App () {
         leftComponent={{ icon: 'menu', color: '#fff' }}
         centerComponent={{ text: 'Facturas', style: { color: '#fff' } }}
       />
-      <HomeScreen arreglo={arregloDB}/> 
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" > 
+            {props => <HomeScreen {...props} arreglo={arregloDB}/>}
+        </Stack.Screen>
+        <Stack.Screen name="Facturas" component={Facturas} />
+      </Stack.Navigator>
+      
     </SafeAreaProvider>
+    </NavigationContainer>
   )
 }
 export default App;
